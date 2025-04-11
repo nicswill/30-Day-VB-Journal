@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import type { UserProgress } from '../types';
 import { journalDays, weekIntros, weekEndMessages, getWeekNumber, isLastDayOfWeek, getFinalMessage } from '../data/journalContent';
 
@@ -189,8 +190,8 @@ export default function Journal() {
                   <div key={index} className="mb-14">
                     <p className="block text-sm text-gray-700 mb-6 leading-snug w-full break-words">{question}</p>
                     <textarea
-                      className="border rounded-md p-2 bg-white/90 w-full"
-                      rows={4}
+                      className="border rounded-md p-4 bg-white/90 w-full text-base"
+                      rows={5}
                       onChange={(e) => handleResponseChange('thinkAboutThis', index, e.target.value)}
                       value={currentDayEntries.thinkAboutThisResponses[index] || ''}
                     />
@@ -206,8 +207,8 @@ export default function Journal() {
                   <div key={index} className="mb-14">
                     <p className="block text-sm text-gray-700 mb-6 leading-snug w-full break-words">✅ {action}</p>
                     <textarea
-                      className="border rounded-md p-2 bg-white/90 w-full"
-                      rows={4}
+                      className="border rounded-md p-4 bg-white/90 w-full text-base"
+                      rows={5}
                       onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
                       value={currentDayEntries.takeActionResponses[index] || ''}
                     />
