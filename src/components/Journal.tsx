@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import type { UserProgress } from '../types';
 import { journalDays, weekIntros, weekEndMessages, getWeekNumber, isLastDayOfWeek, getFinalMessage } from '../data/journalContent';
 
@@ -165,16 +166,16 @@ export default function Journal() {
         ) : null}
 
         <div className="bg-white/95 backdrop-blur-sm shadow rounded-lg p-8">
-          <h1 className="text-3xl font-bold mb-6">Day {currentDay}</h1>
+          <h1 className="text-3xl font-bold mb-10">Day {currentDay}</h1>
 
-          <div className="space-y-8">
+          <div className="space-y-14">
             <div>
-              <h2 className="text-xl font-semibold mb-2">Scripture</h2>
+              <h2 className="text-xl font-semibold mb-4">Scripture</h2>
               <p className="text-2xl font-medium text-gray-700 whitespace-pre-line">{currentDayData.scripture}</p>
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold mb-2">Let's Talk</h2>
+              <h2 className="text-xl font-semibold mb-4">Let's Talk</h2>
               <div className="prose max-w-none">
                 {currentDayData.letsTalk.split('\n').map((paragraph, index) => (
                   <p key={index} className="mb-4">{paragraph}</p>
@@ -184,17 +185,15 @@ export default function Journal() {
 
             <div>
               <h2 className="text-lg font-semibold mb-6">Think About This</h2>
-              <div className="space-y-10">
+              <div className="space-y-14">
                 {Array.isArray(currentDayData.thinkAboutThis) && currentDayData.thinkAboutThis.map((question, index) => (
-                  <div key={index} className="mb-10">
-                    <label className="block text-sm text-gray-700 mb-4 leading-snug w-fit max-w-full break-words">{question}</label>
+                  <div key={index} className="mb-14">
+                    <p className="block text-sm text-gray-700 mb-6 leading-snug w-full break-words">{question}</p>
                     <textarea
-                      className="border rounded-md p-2 bg-white/90 w-full max-w-full"
+                      className="border rounded-md p-2 bg-white/90 w-full"
                       rows={4}
                       onChange={(e) => handleResponseChange('thinkAboutThis', index, e.target.value)}
-                      value=
-                      
-                      {currentDayEntries.thinkAboutThisResponses[index] || ''}
+                      value={currentDayEntries.thinkAboutThisResponses[index] || ''}
                     />
                   </div>
                 ))}
@@ -203,17 +202,15 @@ export default function Journal() {
 
             <div>
               <h2 className="text-lg font-semibold mb-6">Take Action</h2>
-              <div className="space-y-10">
+              <div className="space-y-14">
                 {Array.isArray(currentDayData.takeAction) && currentDayData.takeAction.map((action, index) => (
-                  <div key={index} className="mb-10">
-                    <label className="block text-sm text-gray-700 mb-4 leading-snug w-fit max-w-full break-words">✅ {action}</label>
+                  <div key={index} className="mb-14">
+                    <p className="block text-sm text-gray-700 mb-6 leading-snug w-full break-words">✅ {action}</p>
                     <textarea
-                      className="border rounded-md p-2 bg-white/90 w-full max-w-full"
+                      className="border rounded-md p-2 bg-white/90 w-full"
                       rows={4}
                       onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
-                      value=
-                      
-                      {currentDayEntries.takeActionResponses[index] || ''}
+                      value={currentDayEntries.takeActionResponses[index] || ''}
                     />
                   </div>
                 ))}
@@ -221,13 +218,13 @@ export default function Journal() {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold mb-2">Prayer</h2>
+              <h2 className="text-xl font-semibold mb-4">Prayer</h2>
               <p className="text-xl italic font-medium text-gray-700">{currentDayData.prayer}</p>
             </div>
           </div>
 
           {isLastDayOfWeek(currentDay) && currentDay < journalDays.length && weekEndMessages[weekNumber] && (
-            <div className="mt-8 p-6 bg-gray-50/90 backdrop-blur-sm rounded-lg">
+            <div className="mt-14 p-6 bg-gray-50/90 backdrop-blur-sm rounded-lg">
               <div className="prose max-w-none">
                 {weekEndMessages[weekNumber].split('\n').map((paragraph, index) => (
                   <p key={index} className="mb-4">{paragraph}</p>
@@ -237,7 +234,7 @@ export default function Journal() {
           )}
 
           {currentDay === journalDays.length && (
-            <div className="mt-8 p-6 bg-gray-50/90 backdrop-blur-sm rounded-lg">
+            <div className="mt-14 p-6 bg-gray-50/90 backdrop-blur-sm rounded-lg">
               <div className="prose max-w-none">
                 {getFinalMessage().split('\n').map((paragraph, index) => (
                   <p key={index} className="mb-4">{paragraph}</p>
@@ -246,7 +243,7 @@ export default function Journal() {
             </div>
           )}
 
-          <div className="mt-8">
+          <div className="mt-12">
             <button
               onClick={markDayComplete}
               className="w-full bg-indigo-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
