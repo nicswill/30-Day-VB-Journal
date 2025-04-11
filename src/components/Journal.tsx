@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import type { UserProgress } from '../types';
 import { journalDays, weekIntros, weekEndMessages, getWeekNumber, isLastDayOfWeek, getFinalMessage } from '../data/journalContent';
 
