@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import type { UserProgress } from '../types';
-import { journalDays, weekIntros, weekEndMessages, getWeekNumber, isLastDayOfWeek, getFinalMessage } from '../data/journalContent';
+import { journalDays, weekIntros, getWeekNumber } from '../data/journalContent';
 
 export default function Journal() {
   const [currentDay, setCurrentDay] = useState(1);
@@ -70,7 +69,6 @@ export default function Journal() {
 
   const currentDayData = currentDay <= journalDays.length ? journalDays[currentDay - 1] : null;
   const weekNumber = getWeekNumber(currentDay);
-  const weekIntro = weekNumber <= weekIntros.length ? weekIntros[weekNumber - 1] : null;
 
   const currentDayEntries = userProgress.journalEntries[currentDay] || {
     thinkAboutThisResponses: [],
@@ -128,100 +126,102 @@ export default function Journal() {
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full px-4 mx-auto">
         <h1 className="text-3xl font-bold mb-4">Day {currentDay}</h1>
-
-        <div className="flex justify-between items-center mb-6">
-          <button
-            onClick={handlePreviousDay}
-            className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={currentDay === 1}
-          >
-            Previous Day
-          </button>
-          <button
-            onClick={handleNextDay}
-            className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={currentDay === journalDays.length}
-          >
-            Next Day
-          </button>
-        </div>
-
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold">Scripture</h2>
-          <p className="text-lg whitespace-pre-line mt-2">{currentDayData.scripture}</p>
-        </div>
-
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold">Let's Talk</h2>
-          <div className="prose mt-2">
-            {currentDayData.letsTalk.split('\n').map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold">Think About This</h2>
-          {currentDayData.thinkAboutThis.map((question, index) => (
-            <div key={index} className="mt-4">
-              <label className="block text-gray-700 text-sm mb-4">{question}</label>
-              <textarea
-                className="w-full border rounded-md p-4 bg-white/90"
-                rows={4}
-                onChange={(e) => handleResponseChange('thinkAboutThis', index, e.target.value)}
-                value={currentDayEntries.thinkAboutThisResponses[index] || ''}
-              />
+        {currentDayData && (
+          <>
+            <div className="flex justify-between items-center mb-6">
+              <button
+                onClick={handlePreviousDay}
+                className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={currentDay === 1}
+              >
+                Previous Day
+              </button>
+              <button
+                onClick={handleNextDay}
+                className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={currentDay === journalDays.length}
+              >
+                Next Day
+              </button>
             </div>
-          ))}
-        </div>
 
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold">Take Action</h2>
-          {currentDayData.takeAction.map((action, index) => (
-            <div key={index} className="mt-4">
-              <label className="block text-gray-700 text-sm mb-4">✅ {action}</label>
-              <textarea
-                className="w-full border rounded-md p-4 bg-white/90"
-                rows={4}
-                onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
-                value={currentDayEntries.takeActionResponses[index] || ''}
-              />
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold">Scripture</h2>
+              <p className="text-lg whitespace-pre-line mt-2">{currentDayData.scripture}</p>
             </div>
-          ))}
-        </div>
 
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold">Prayer</h2>
-          <p className="text-lg italic text-gray-700 mt-2">{currentDayData.prayer}</p>
-        </div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold">Let's Talk</h2>
+              <div className="prose mt-2">
+                {currentDayData.letsTalk.split('\n').map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
 
-        <button
-          onClick={markDayComplete}
-          className="mt-6 w-full bg-indigo-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={userProgress.journalEntries[currentDay]?.completed}
-        >
-          {userProgress.journalEntries[currentDay]?.completed
-            ? 'Day Completed'
-            : 'Mark Day as Complete'}
-        </button>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold">Think About This</h2>
+              {currentDayData.thinkAboutThis.map((question, index) => (
+                <div key={index} className="mt-4">
+                  <label className="block text-gray-700 text-sm mb-2">{question}</label>
+                  <textarea
+                    className="w-full border rounded-md p-3 bg-white/90"
+                    rows={4}
+                    onChange={(e) => handleResponseChange('thinkAboutThis', index, e.target.value)}
+                    value={currentDayEntries.thinkAboutThisResponses[index] || ''}
+                  />
+                </div>
+              ))}
+            </div>
 
-        {/* Bottom Navigation */}
-        <div className="flex justify-between items-center mt-8">
-          <button
-            onClick={handlePreviousDay}
-            className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={currentDay === 1}
-          >
-            Previous Day
-          </button>
-          <button
-            onClick={handleNextDay}
-            className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={currentDay === journalDays.length}
-          >
-            Next Day
-          </button>
-        </div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold">Take Action</h2>
+              {currentDayData.takeAction.map((action, index) => (
+                <div key={index} className="mt-4">
+                  <label className="block text-gray-700 text-sm mb-2">✅ {action}</label>
+                  <textarea
+                    className="w-full border rounded-md p-3 bg-white/90"
+                    rows={4}
+                    onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
+                    value={currentDayEntries.takeActionResponses[index] || ''}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold">Prayer</h2>
+              <p className="text-lg italic text-gray-700 mt-2">{currentDayData.prayer}</p>
+            </div>
+
+            <button
+              onClick={markDayComplete}
+              className="mt-6 w-full bg-indigo-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={userProgress.journalEntries[currentDay]?.completed}
+            >
+              {userProgress.journalEntries[currentDay]?.completed
+                ? 'Day Completed'
+                : 'Mark Day as Complete'}
+            </button>
+
+            <div className="flex justify-between items-center mt-8">
+              <button
+                onClick={handlePreviousDay}
+                className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={currentDay === 1}
+              >
+                Previous Day
+              </button>
+              <button
+                onClick={handleNextDay}
+                className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={currentDay === journalDays.length}
+              >
+                Next Day
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
