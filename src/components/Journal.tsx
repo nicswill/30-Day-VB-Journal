@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { UserProgress } from '../types';
-import { journalDays, weekIntros, weekEndMessages, getWeekNumber, isLastDayOfWeek, getFinalMessage } from '../data/journalContent';
+import { journalDays, weekIntros, getWeekNumber } from '../data/journalContent';
 
 export default function Journal() {
   const [currentDay, setCurrentDay] = useState(1);
