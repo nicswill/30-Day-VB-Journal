@@ -80,7 +80,7 @@ export default function Journal() {
   if (!currentDayData) {
     return (
       <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
+        <div className="w-full px-4 mx-auto">
           <div className="bg-white shadow rounded-lg p-8">
             <h1 className="text-3xl font-bold mb-6">Error</h1>
             <p>Journal content for day {currentDay} is not available.</p>
@@ -99,7 +99,7 @@ export default function Journal() {
   if (showIntro) {
     return (
       <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto bg-white shadow rounded-lg p-8">
+        <div className="w-full px-4 mx-auto bg-white shadow rounded-lg p-8">
           <h1 className="text-3xl font-bold mb-4">Welcome to the 30-Day Vision Journal</h1>
           <p className="mb-4">This journal is your guide to discovering and walking in God's vision for your life.</p>
           <p className="mb-4">Each day includes scripture, reflection prompts, action steps, and prayer. Take your time. Reflect. Be honest. Grow.</p>
@@ -125,135 +125,70 @@ export default function Journal() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="flex justify-between items-center mb-8 bg-white/80 backdrop-blur-sm rounded-lg p-4">
-          <button
-            onClick={() => setShowIntro(true)}
-            className="text-indigo-600 hover:text-indigo-500"
-          >
-            ← Back to Introduction
-          </button>
-          <div className="flex space-x-4">
-            <button
-              onClick={handlePreviousDay}
-              className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={currentDay === 1}
-            >
-              Previous Day
-            </button>
-            <button
-              onClick={handleNextDay}
-              className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={currentDay === journalDays.length}
-            >
-              Next Day
-            </button>
-          </div>
-        </div>
-
-        {currentDay === 1 || currentDay % 7 === 1 ? (
-          weekIntro && (
-            <div className="bg-white/95 backdrop-blur-sm shadow rounded-lg p-8 mb-8">
-              <h2 className="text-2xl font-bold mb-4">Week {weekNumber}: {weekIntro.theme}</h2>
-              <div className="prose max-w-none">
-                {weekIntro.introduction.split('\n').map((paragraph, index) => (
-                  <p key={index} className="mb-4">{paragraph}</p>
-                ))}
-              </div>
-            </div>
-          )
-        ) : null}
-
-        <div className="bg-white/95 backdrop-blur-sm shadow rounded-lg p-8">
-          <h1 className="text-3xl font-bold mb-10">Day {currentDay}</h1>
-
-          <div className="space-y-14">
-            <div>
-              <h2 className="text-xl font-semibold mb-4">Scripture</h2>
-              <p className="text-2xl font-medium text-gray-700 whitespace-pre-line">{currentDayData.scripture}</p>
+      <div className="w-full px-4 mx-auto">
+        <h1 className="text-3xl font-bold mb-4">Day {currentDay}</h1>
+        {currentDayData && (
+          <>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold">Scripture</h2>
+              <p className="text-lg whitespace-pre-line mt-2">{currentDayData.scripture}</p>
             </div>
 
-            <div>
-              <h2 className="text-xl font-semibold mb-4">Let's Talk</h2>
-              <div className="prose max-w-none">
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold">Let's Talk</h2>
+              <div className="prose mt-2">
                 {currentDayData.letsTalk.split('\n').map((paragraph, index) => (
-                  <p key={index} className="mb-4">{paragraph}</p>
+                  <p key={index}>{paragraph}</p>
                 ))}
               </div>
             </div>
 
-            <div>
-              <h2 className="text-lg font-semibold mb-6">Think About This</h2>
-              <div className="space-y-14">
-                {Array.isArray(currentDayData.thinkAboutThis) && currentDayData.thinkAboutThis.map((question, index) => (
-                  <div key={index} className="mb-14">
-                    <p className="block text-sm text-gray-700 mb-6 leading-snug w-full break-words">{question}</p>
-                    <textarea
-                      className="border rounded-md p-4 bg-white/90 w-full text-base"
-                      rows={5}
-                      onChange={(e) => handleResponseChange('thinkAboutThis', index, e.target.value)}
-                      value={currentDayEntries.thinkAboutThisResponses[index] || ''}
-                    />
-                  </div>
-                ))}
-              </div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold">Think About This</h2>
+              {currentDayData.thinkAboutThis.map((question, index) => (
+                <div key={index} className="mt-4">
+                  <label className="block text-gray-700 text-sm mb-2">{question}</label>
+                  <textarea
+                    className="w-full border rounded-md p-3 bg-white/90"
+                    rows={4}
+                    onChange={(e) => handleResponseChange('thinkAboutThis', index, e.target.value)}
+                    value={currentDayEntries.thinkAboutThisResponses[index] || ''}
+                  />
+                </div>
+              ))}
             </div>
 
-            <div>
-              <h2 className="text-lg font-semibold mb-6">Take Action</h2>
-              <div className="space-y-14">
-                {Array.isArray(currentDayData.takeAction) && currentDayData.takeAction.map((action, index) => (
-                  <div key={index} className="mb-14">
-                    <p className="block text-sm text-gray-700 mb-6 leading-snug w-full break-words">✅ {action}</p>
-                    <textarea
-                      className="border rounded-md p-4 bg-white/90 w-full text-base"
-                      rows={5}
-                      onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
-                      value={currentDayEntries.takeActionResponses[index] || ''}
-                    />
-                  </div>
-                ))}
-              </div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold">Take Action</h2>
+              {currentDayData.takeAction.map((action, index) => (
+                <div key={index} className="mt-4">
+                  <label className="block text-gray-700 text-sm mb-2">✅ {action}</label>
+                  <textarea
+                    className="w-full border rounded-md p-3 bg-white/90"
+                    rows={4}
+                    onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
+                    value={currentDayEntries.takeActionResponses[index] || ''}
+                  />
+                </div>
+              ))}
             </div>
 
-            <div>
-              <h2 className="text-xl font-semibold mb-4">Prayer</h2>
-              <p className="text-xl italic font-medium text-gray-700">{currentDayData.prayer}</p>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold">Prayer</h2>
+              <p className="text-lg italic text-gray-700 mt-2">{currentDayData.prayer}</p>
             </div>
-          </div>
 
-          {isLastDayOfWeek(currentDay) && currentDay < journalDays.length && weekEndMessages[weekNumber] && (
-            <div className="mt-14 p-6 bg-gray-50/90 backdrop-blur-sm rounded-lg">
-              <div className="prose max-w-none">
-                {weekEndMessages[weekNumber].split('\n').map((paragraph, index) => (
-                  <p key={index} className="mb-4">{paragraph}</p>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {currentDay === journalDays.length && (
-            <div className="mt-14 p-6 bg-gray-50/90 backdrop-blur-sm rounded-lg">
-              <div className="prose max-w-none">
-                {getFinalMessage().split('\n').map((paragraph, index) => (
-                  <p key={index} className="mb-4">{paragraph}</p>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="mt-12">
             <button
               onClick={markDayComplete}
-              className="w-full bg-indigo-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-6 w-full bg-indigo-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={userProgress.journalEntries[currentDay]?.completed}
             >
-              {userProgress.journalEntries[currentDay]?.completed 
+              {userProgress.journalEntries[currentDay]?.completed
                 ? 'Day Completed'
                 : 'Mark Day as Complete'}
             </button>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
