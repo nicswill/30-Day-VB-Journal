@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { UserProgress } from '../types';
-import { journalDays, weekIntros, getWeekNumber } from '../data/journalContent';
+import { journalDays, weekIntros, weekEndMessages, getWeekNumber, isLastDayOfWeek, getFinalMessage } from '../data/journalContent';
 
 export default function Journal() {
   const [currentDay, setCurrentDay] = useState(1);
@@ -129,6 +129,23 @@ export default function Journal() {
         <h1 className="text-3xl font-bold mb-4">Day {currentDay}</h1>
         {currentDayData && (
           <>
+            <div className="flex justify-between items-center mb-6">
+              <button
+                onClick={handlePreviousDay}
+                className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={currentDay === 1}
+              >
+                Previous Day
+              </button>
+              <button
+                onClick={handleNextDay}
+                className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={currentDay === journalDays.length}
+              >
+                Next Day
+              </button>
+            </div>
+
             <div className="mb-6">
               <h2 className="text-xl font-semibold">Scripture</h2>
               <p className="text-lg whitespace-pre-line mt-2">{currentDayData.scripture}</p>
@@ -187,6 +204,23 @@ export default function Journal() {
                 ? 'Day Completed'
                 : 'Mark Day as Complete'}
             </button>
+
+            <div className="flex justify-between items-center mt-8">
+              <button
+                onClick={handlePreviousDay}
+                className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={currentDay === 1}
+              >
+                Previous Day
+              </button>
+              <button
+                onClick={handleNextDay}
+                className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={currentDay === journalDays.length}
+              >
+                Next Day
+              </button>
+            </div>
           </>
         )}
       </div>
