@@ -168,9 +168,9 @@ export default function Journal() {
               <h2 className="text-xl font-semibold">Think About This</h2>
               {currentDayData.thinkAboutThis.map((question, index) => (
                 <div key={index} className="mt-10">
-                  <label className="block text-gray-700 text-sm mb-6">{question}</label>
+                  <div className="block text-gray-700 text-sm mb-6">{question}</div>
                   <textarea
-                    className="w-full border rounded-md p-4 bg-white/90"
+                    className="w-full border rounded-md p-4 bg-white/90 mt-4"
                     rows={4}
                     onChange={(e) => handleResponseChange('thinkAboutThis', index, e.target.value)}
                     value={currentDayEntries.thinkAboutThisResponses[index] || ''}
@@ -183,9 +183,9 @@ export default function Journal() {
               <h2 className="text-xl font-semibold">Take Action</h2>
               {currentDayData.takeAction.map((action, index) => (
                 <div key={index} className="mt-10">
-                  <label className="block text-gray-700 text-sm mb-6">✅ {action}</label>
+                  <div className="block text-gray-700 text-sm mb-6">✅ {action}</div>
                   <textarea
-                    className="w-full border rounded-md p-4 bg-white/90"
+                    className="w-full border rounded-md p-4 bg-white/90 mt-4"
                     rows={4}
                     onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
                     value={currentDayEntries.takeActionResponses[index] || ''}
