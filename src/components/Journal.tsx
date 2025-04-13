@@ -68,7 +68,6 @@ export default function Journal() {
   };
 
   const currentDayData = currentDay <= journalDays.length ? journalDays[currentDay - 1] : null;
-  const weekNumber = getWeekNumber(currentDay);
 
   const currentDayEntries = userProgress.journalEntries[currentDay] || {
     thinkAboutThisResponses: [],
