@@ -157,7 +157,7 @@ export default function Journal() {
           <p className="mb-4">Don't rush the process. Go at your pace and invite God into every moment.</p>
           <button
             onClick={() => setShowIntro(false)}
-            className="mt-6 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-xl shadow hover:bg-indigo-700"
+            className="mt-6 px-6 py-4 bg-indigo-700 text-white text-lg font-bold rounded-xl shadow hover:bg-indigo-800"
           >
             Start Journal
           </button>
@@ -171,37 +171,37 @@ export default function Journal() {
       <div className="w-full px-4 mx-auto">
         <button
           onClick={() => setShowIntro(true)}
-          className="text-indigo-600 hover:text-indigo-500 mb-6"
+          className="text-indigo-700 font-semibold hover:text-indigo-500 mb-6"
         >
           ← Back to Introduction
         </button>
-        <h1 className="text-3xl font-bold mb-6">Day {currentDay}</h1>
+        <h1 className="text-4xl font-bold mb-6">Day {currentDay}</h1>
         {currentDayData && (
           <>
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex justify-between items-center mb-10">
               <button
                 onClick={handlePreviousDay}
-                className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={currentDay === 1}
               >
                 Previous Day
               </button>
               <button
                 onClick={handleNextDay}
-                className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={currentDay === journalDays.length}
               >
                 Next Day
               </button>
             </div>
 
-            <div className="mb-10">
-              <h2 className="text-xl font-semibold">Scripture</h2>
+            <div className="mb-12">
+              <h2 className="text-2xl font-semibold">Scripture</h2>
               <p className="text-lg whitespace-pre-line mt-4">{currentDayData.scripture}</p>
             </div>
 
-            <div className="mb-10">
-              <h2 className="text-xl font-semibold">Let's Talk</h2>
+            <div className="mb-12">
+              <h2 className="text-2xl font-semibold">Let's Talk</h2>
               <div className="prose mt-4">
                 {currentDayData.letsTalk.split('\n').map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
@@ -209,11 +209,11 @@ export default function Journal() {
               </div>
             </div>
 
-            <div className="mb-10">
-              <h2 className="text-xl font-semibold">Think About This</h2>
+            <div className="mb-12">
+              <h2 className="text-2xl font-semibold">Think About This</h2>
               {currentDayData.thinkAboutThis.map((question, index) => (
                 <div key={index} className="mt-10">
-                  <div className="block text-gray-700 text-sm mb-6">{question}</div>
+                  <div className="block text-gray-700 text-base font-medium mb-6">{question}</div>
                   <textarea
                     className="border rounded-md p-4 bg-white/90 mt-4 resize"
                     style={{ width: '100%' }}
@@ -225,8 +225,8 @@ export default function Journal() {
               ))}
             </div>
 
-            <div className="mb-10">
-              <h2 className="text-xl font-semibold">Take Action</h2>
+            <div className="mb-12">
+              <h2 className="text-2xl font-semibold">Take Action</h2>
               {currentDayData.takeAction.map((action, index) => (
                 <div key={index} className="mt-10">
                   <div className="flex items-center mb-6">
@@ -236,7 +236,7 @@ export default function Journal() {
                       checked={!!currentDayEntries.completedActions?.[index]}
                       onChange={(e) => handleCheckboxChange(index, e.target.checked)}
                     />
-                    <span className="text-sm text-gray-700">{action}</span>
+                    <span className="text-base text-gray-700 font-medium">{action}</span>
                   </div>
                   <textarea
                     className="border rounded-md p-4 bg-white/90 mt-4 resize"
@@ -249,14 +249,14 @@ export default function Journal() {
               ))}
             </div>
 
-            <div className="mb-10">
-              <h2 className="text-xl font-semibold">Prayer</h2>
+            <div className="mb-12">
+              <h2 className="text-2xl font-semibold">Prayer</h2>
               <p className="text-lg italic text-gray-700 mt-4">{currentDayData.prayer}</p>
             </div>
 
             <button
               onClick={markDayComplete}
-              className="mt-6 w-full bg-indigo-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-8 w-full bg-indigo-700 text-white text-lg px-8 py-4 rounded-lg font-bold shadow hover:bg-indigo-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={userProgress.journalEntries[currentDay]?.completed}
             >
               {userProgress.journalEntries[currentDay]?.completed
@@ -264,17 +264,17 @@ export default function Journal() {
                 : 'Mark Day as Complete'}
             </button>
 
-            <div className="flex justify-between items-center mt-10">
+            <div className="flex justify-between items-center mt-12">
               <button
                 onClick={handlePreviousDay}
-                className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={currentDay === 1}
               >
                 Previous Day
               </button>
               <button
                 onClick={handleNextDay}
-                className="px-4 py-2 border rounded-md hover:bg-gray-50 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={currentDay === journalDays.length}
               >
                 Next Day
