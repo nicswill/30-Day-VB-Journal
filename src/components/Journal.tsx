@@ -22,20 +22,21 @@ export default function Journal() {
       const dayEntries = prev.journalEntries[currentDay] || {
         thinkAboutThisResponses: [],
         takeActionResponses: [],
-        completed: false
+        completed: false,
+        completedActions: {}
       };
 
-      const updatedEntries = {
-        ...dayEntries,
-        [`${type}Responses`]: [...dayEntries[`${type}Responses`]]
-      };
-      updatedEntries[`${type}Responses`][index] = value;
+      const updatedResponses = [...(dayEntries[`${type}Responses`] || [])];
+      updatedResponses[index] = value;
 
       return {
         ...prev,
         journalEntries: {
           ...prev.journalEntries,
-          [currentDay]: updatedEntries
+          [currentDay]: {
+            ...dayEntries,
+            [`${type}Responses`]: updatedResponses
+          }
         }
       };
     });
@@ -46,39 +47,56 @@ export default function Journal() {
       const dayEntries = prev.journalEntries[currentDay] || {
         thinkAboutThisResponses: [],
         takeActionResponses: [],
-        completed: false
+        completed: false,
+        completedActions: {}
       };
 
-      const updatedEntries = {
-        ...dayEntries,
-        completedActions: {
-          ...dayEntries.completedActions,
-          [index]: checked
-        }
+      const updatedCompletedActions = {
+        ...dayEntries.completedActions,
+        [index]: checked
       };
 
       return {
         ...prev,
         journalEntries: {
           ...prev.journalEntries,
-          [currentDay]: updatedEntries
+          [currentDay]: {
+            ...dayEntries,
+            completedActions: updatedCompletedActions
+          }
         }
       };
     });
   };
 
   const markDayComplete = () => {
-    setUserProgress(prev => ({
-      ...prev,
-      currentDay: Math.max(prev.currentDay, currentDay + 1),
-      journalEntries: {
-        ...prev.journalEntries,
-        [currentDay]: {
-          ...prev.journalEntries[currentDay],
-          completed: true
+    const { thinkAboutThisResponses = [], takeActionResponses = [] } = userProgress.journalEntries[currentDay] || {};
+    const hasResponse = thinkAboutThisResponses.some(r => r.trim() !== '') || takeActionResponses.some(r => r.trim() !== '');
+    if (!hasResponse) {
+      alert('Please answer at least one prompt before marking the day as complete.');
+      return;
+    }
+
+    setUserProgress(prev => {
+      const currentEntries = prev.journalEntries[currentDay] || {
+        thinkAboutThisResponses: [],
+        takeActionResponses: [],
+        completed: false,
+        completedActions: {}
+      };
+
+      return {
+        ...prev,
+        currentDay: Math.max(prev.currentDay, currentDay + 1),
+        journalEntries: {
+          ...prev.journalEntries,
+          [currentDay]: {
+            ...currentEntries,
+            completed: true
+          }
         }
-      }
-    }));
+      };
+    });
   };
 
   const handleNextDay = () => {
@@ -201,7 +219,7 @@ export default function Journal() {
                     style={{ width: '100%' }}
                     rows={4}
                     onChange={(e) => handleResponseChange('thinkAboutThis', index, e.target.value)}
-                    value={currentDayEntries.thinkAboutThisResponses[index] || ''}
+                    value={currentDayEntries.thinkAboutThisResponses?.[index] || ''}
                   />
                 </div>
               ))}
@@ -225,7 +243,7 @@ export default function Journal() {
                     style={{ width: '100%' }}
                     rows={4}
                     onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
-                    value={currentDayEntries.takeActionResponses[index] || ''}
+                    value={currentDayEntries.takeActionResponses?.[index] || ''}
                   />
                 </div>
               ))}
