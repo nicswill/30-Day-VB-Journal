@@ -16,13 +16,15 @@ export interface WeekIntro {
 export interface UserProgress {
   currentDay: number;
   journalEntries: {
-    [key: number]: {
+    [day: number]: {
       thinkAboutThisResponses: string[];
       takeActionResponses: string[];
       completed: boolean;
-    }
+      completedActions?: { [index: number]: boolean };
+    };
   };
 }
+
 
 export interface AuthUser {
   id: string;
