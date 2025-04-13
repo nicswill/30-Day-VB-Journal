@@ -197,7 +197,8 @@ export default function Journal() {
                 <div key={index} className="mt-10">
                   <div className="block text-gray-700 text-sm mb-6">{question}</div>
                   <textarea
-                    className="w-full border rounded-md p-4 bg-white/90 mt-4"
+                    className="border rounded-md p-4 bg-white/90 mt-4 resize"
+                    style={{ width: '100%' }}
                     rows={4}
                     onChange={(e) => handleResponseChange('thinkAboutThis', index, e.target.value)}
                     value={currentDayEntries.thinkAboutThisResponses[index] || ''}
@@ -220,7 +221,8 @@ export default function Journal() {
                     <span className="text-sm text-gray-700">{action}</span>
                   </div>
                   <textarea
-                    className="w-full border rounded-md p-4 bg-white/90 mt-4"
+                    className="border rounded-md p-4 bg-white/90 mt-4 resize"
+                    style={{ width: '100%' }}
                     rows={4}
                     onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
                     value={currentDayEntries.takeActionResponses[index] || ''}
