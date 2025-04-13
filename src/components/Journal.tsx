@@ -41,6 +41,32 @@ export default function Journal() {
     });
   };
 
+  const handleCheckboxChange = (index: number, checked: boolean) => {
+    setUserProgress(prev => {
+      const dayEntries = prev.journalEntries[currentDay] || {
+        thinkAboutThisResponses: [],
+        takeActionResponses: [],
+        completed: false
+      };
+
+      const updatedEntries = {
+        ...dayEntries,
+        completedActions: {
+          ...dayEntries.completedActions,
+          [index]: checked
+        }
+      };
+
+      return {
+        ...prev,
+        journalEntries: {
+          ...prev.journalEntries,
+          [currentDay]: updatedEntries
+        }
+      };
+    });
+  };
+
   const markDayComplete = () => {
     setUserProgress(prev => ({
       ...prev,
@@ -72,7 +98,8 @@ export default function Journal() {
   const currentDayEntries = userProgress.journalEntries[currentDay] || {
     thinkAboutThisResponses: [],
     takeActionResponses: [],
-    completed: false
+    completed: false,
+    completedActions: {}
   };
 
   if (!currentDayData) {
@@ -183,7 +210,15 @@ export default function Journal() {
               <h2 className="text-xl font-semibold">Take Action</h2>
               {currentDayData.takeAction.map((action, index) => (
                 <div key={index} className="mt-10">
-                  <div className="block text-gray-700 text-sm mb-6">✅ {action}</div>
+                  <div className="flex items-center mb-6">
+                    <input
+                      type="checkbox"
+                      className="mr-2"
+                      checked={!!currentDayEntries.completedActions?.[index]}
+                      onChange={(e) => handleCheckboxChange(index, e.target.checked)}
+                    />
+                    <span className="text-sm text-gray-700">{action}</span>
+                  </div>
                   <textarea
                     className="w-full border rounded-md p-4 bg-white/90 mt-4"
                     rows={4}
