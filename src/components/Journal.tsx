@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { UserProgress } from '../types';
-import { journalDays } from '../data/journalContent';
+import { journalDays, weekIntros, weekEndMessages, getWeekNumber, isLastDayOfWeek, getFinalMessage } from '../data/journalContent';
+import coverImg from '../assets/cover.jpg';
 
 export default function Journal() {
   const [currentDay, setCurrentDay] = useState(1);
@@ -112,6 +113,8 @@ export default function Journal() {
   };
 
   const currentDayData = currentDay <= journalDays.length ? journalDays[currentDay - 1] : null;
+  const weekNumber = getWeekNumber(currentDay);
+  const weekIntro = weekNumber <= weekIntros.length ? weekIntros[weekNumber - 1] : null;
 
   const currentDayEntries = userProgress.journalEntries[currentDay] || {
     thinkAboutThisResponses: [],
@@ -144,6 +147,11 @@ export default function Journal() {
       <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full px-4 mx-auto bg-white shadow rounded-lg p-8">
           <h1 className="text-3xl font-bold mb-4">Welcome to the 30-Day Vision Journal</h1>
+          <img
+            src={coverImg}
+            alt="Journal Cover"
+            className="w-full mb-8 rounded-lg shadow"
+          />
           <p className="mb-4">This journal is your guide to discovering and walking in God's vision for your life.</p>
           <p className="mb-4">Each day includes scripture, reflection prompts, action steps, and prayer. Take your time. Reflect. Be honest. Grow.</p>
           <h2 className="text-2xl font-semibold mt-8 mb-4">How to Use This Journal</h2>
@@ -157,7 +165,7 @@ export default function Journal() {
           <p className="mb-4">Don't rush the process. Go at your pace and invite God into every moment.</p>
           <button
             onClick={() => setShowIntro(false)}
-            className="mt-6 px-6 py-4 bg-indigo-700 text-white text-lg font-bold rounded-xl shadow hover:bg-indigo-800"
+            className="mt-6 px-8 py-6 bg-indigo-700 text-white text-xl font-bold rounded-xl shadow hover:bg-indigo-800"
           >
             Start Journal
           </button>
@@ -168,120 +176,114 @@ export default function Journal() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full px-4 mx-auto">
-        <button
-          onClick={() => setShowIntro(true)}
-          className="text-indigo-700 font-semibold hover:text-indigo-500 mb-6"
-        >
-          ← Back to Introduction
-        </button>
-        <h1 className="text-4xl font-bold mb-6">Day {currentDay}</h1>
-        {currentDayData && (
-          <>
-            <div className="flex justify-between items-center mb-10">
-              <button
-                onClick={handlePreviousDay}
-                className="px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={currentDay === 1}
-              >
-                Previous Day
-              </button>
-              <button
-                onClick={handleNextDay}
-                className="px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={currentDay === journalDays.length}
-              >
-                Next Day
-              </button>
-            </div>
+      <div className="w-full px-4 mx-auto max-w-4xl">
+        <div className="bg-white shadow-lg rounded-lg p-8">
+          <h1 className="text-3xl font-bold mb-8">Day {currentDay}</h1>
 
+          {(currentDay === 1 || currentDay % 7 === 1) && weekIntro && (
             <div className="mb-12">
-              <h2 className="text-2xl font-semibold">Scripture</h2>
-              <p className="text-lg whitespace-pre-line mt-4">{currentDayData.scripture}</p>
+              <h2 className="text-2xl font-bold mb-4">Week {weekNumber}: {weekIntro.theme}</h2>
+              <p className="text-gray-700 whitespace-pre-line">{weekIntro.introduction}</p>
             </div>
+          )}
 
-            <div className="mb-12">
-              <h2 className="text-2xl font-semibold">Let's Talk</h2>
-              <div className="prose mt-4">
-                {currentDayData.letsTalk.split('\n').map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold mb-2">Scripture</h2>
+            <p className="text-lg text-gray-700 whitespace-pre-line">{currentDayData.scripture}</p>
+          </div>
+
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold mb-2">Let's Talk</h2>
+            <div className="text-gray-800 space-y-3">
+              {currentDayData.letsTalk.split('\n').map((paragraph, idx) => (
+                <p key={idx}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-12">
+            <h2 className="text-xl font-semibold mb-4">Think About This</h2>
+            {currentDayData.thinkAboutThis.map((question, index) => (
+              <div key={index} className="mb-12">
+                <label className="block text-sm font-medium text-gray-700 mb-4">{question}</label>
+                <textarea
+                  className="w-full border rounded-md p-4"
+                  rows={4}
+                  value={currentDayEntries.thinkAboutThisResponses[index] || ''}
+                  onChange={(e) => handleResponseChange('thinkAboutThis', index, e.target.value)}
+                />
               </div>
-            </div>
+            ))}
+          </div>
 
-            <div className="mb-12">
-              <h2 className="text-2xl font-semibold">Think About This</h2>
-              {currentDayData.thinkAboutThis.map((question, index) => (
-                <div key={index} className="mt-10">
-                  <div className="block text-gray-700 text-base font-medium mb-6">{question}</div>
-                  <textarea
-                    className="border rounded-md p-4 bg-white/90 mt-4 resize"
-                    style={{ width: '100%' }}
-                    rows={4}
-                    onChange={(e) => handleResponseChange('thinkAboutThis', index, e.target.value)}
-                    value={currentDayEntries.thinkAboutThisResponses?.[index] || ''}
+          <div className="mb-12">
+            <h2 className="text-xl font-semibold mb-4">Take Action</h2>
+            {currentDayData.takeAction.map((task, index) => (
+              <div key={index} className="mb-12">
+                <label className="block text-sm font-medium text-gray-700 mb-4">
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                    checked={currentDayEntries.completedActions[index] || false}
+                    onChange={(e) => handleCheckboxChange(index, e.target.checked)}
                   />
-                </div>
-              ))}
-            </div>
+                  {task}
+                </label>
+                <textarea
+                  className="w-full border rounded-md p-4"
+                  rows={3}
+                  value={currentDayEntries.takeActionResponses[index] || ''}
+                  onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
+                />
+              </div>
+            ))}
+          </div>
 
-            <div className="mb-12">
-              <h2 className="text-2xl font-semibold">Take Action</h2>
-              {currentDayData.takeAction.map((action, index) => (
-                <div key={index} className="mt-10">
-                  <div className="flex items-center mb-6">
-                    <input
-                      type="checkbox"
-                      className="mr-2"
-                      checked={!!currentDayEntries.completedActions?.[index]}
-                      onChange={(e) => handleCheckboxChange(index, e.target.checked)}
-                    />
-                    <span className="text-base text-gray-700 font-medium">{action}</span>
-                  </div>
-                  <textarea
-                    className="border rounded-md p-4 bg-white/90 mt-4 resize"
-                    style={{ width: '100%' }}
-                    rows={4}
-                    onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
-                    value={currentDayEntries.takeActionResponses?.[index] || ''}
-                  />
-                </div>
-              ))}
-            </div>
+          <div className="mb-12">
+            <h2 className="text-xl font-semibold mb-2">Prayer</h2>
+            <p className="italic text-gray-700">{currentDayData.prayer}</p>
+          </div>
 
+          {(currentDay % 7 === 0 && weekEndMessages[weekNumber]) && (
             <div className="mb-12">
-              <h2 className="text-2xl font-semibold">Prayer</h2>
-              <p className="text-lg italic text-gray-700 mt-4">{currentDayData.prayer}</p>
+              <h2 className="text-xl font-semibold mb-2">End of Week Reflection</h2>
+              <p className="text-gray-700 whitespace-pre-line">{weekEndMessages[weekNumber]}</p>
             </div>
+          )}
+
+          {currentDay === journalDays.length && (
+            <div className="mb-12">
+              <h2 className="text-xl font-semibold mb-2">Final Encouragement</h2>
+              <p className="text-gray-700 whitespace-pre-line">{getFinalMessage()}</p>
+            </div>
+          )}
+
+          <div className="flex flex-wrap justify-between items-center mt-10 gap-4">
+            <button
+              onClick={handlePreviousDay}
+              className="px-8 py-5 text-lg bg-gray-200 text-gray-700 font-semibold rounded hover:bg-gray-300 disabled:opacity-50"
+              disabled={currentDay === 1}
+            >
+              ← Previous Day
+            </button>
 
             <button
               onClick={markDayComplete}
-              className="mt-8 w-full bg-indigo-700 text-white text-lg px-8 py-4 rounded-lg font-bold shadow hover:bg-indigo-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-8 py-5 text-lg bg-green-600 text-white font-bold rounded hover:bg-green-700"
               disabled={userProgress.journalEntries[currentDay]?.completed}
             >
-              {userProgress.journalEntries[currentDay]?.completed
-                ? 'Day Completed'
-                : 'Mark Day as Complete'}
+              {userProgress.journalEntries[currentDay]?.completed ? 'Day Completed' : 'Mark Day as Complete'}
             </button>
 
-            <div className="flex justify-between items-center mt-12">
-              <button
-                onClick={handlePreviousDay}
-                className="px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={currentDay === 1}
-              >
-                Previous Day
-              </button>
-              <button
-                onClick={handleNextDay}
-                className="px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={currentDay === journalDays.length}
-              >
-                Next Day
-              </button>
-            </div>
-          </>
-        )}
+            <button
+              onClick={handleNextDay}
+              className="px-8 py-5 text-lg bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 disabled:opacity-50"
+              disabled={currentDay === journalDays.length}
+            >
+              Next Day →
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
