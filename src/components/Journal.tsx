@@ -116,7 +116,7 @@ export default function Journal() {
   const weekNumber = getWeekNumber(currentDay);
   const weekIntro = weekNumber <= weekIntros.length ? weekIntros[weekNumber - 1] : null;
 
-  const currentDayEntries = userProgress.journalEntries[currentDay] || {
+  const currentDayEntries = userProgress.journalEntries[currentDay] ?? {
     thinkAboutThisResponses: [],
     takeActionResponses: [],
     completed: false,
@@ -147,11 +147,7 @@ export default function Journal() {
       <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full px-4 mx-auto bg-white shadow rounded-lg p-8">
           <h1 className="text-3xl font-bold mb-4">Welcome to the 30-Day Vision Journal</h1>
-          <img
-            src={coverImg}
-            alt="Journal Cover"
-            className="w-full mb-8 rounded-lg shadow"
-          />
+          <img src={coverImg} alt="Journal Cover" className="w-full mb-8 rounded-lg shadow" />
           <p className="mb-4">This journal is your guide to discovering and walking in God's vision for your life.</p>
           <p className="mb-4">Each day includes scripture, reflection prompts, action steps, and prayer. Take your time. Reflect. Be honest. Grow.</p>
           <h2 className="text-2xl font-semibold mt-8 mb-4">How to Use This Journal</h2>
@@ -224,7 +220,7 @@ export default function Journal() {
                   <input
                     type="checkbox"
                     className="mr-2"
-                    checked={currentDayEntries.completedActions[index] || false}
+                    checked={currentDayEntries?.completedActions?.[index] ?? false}
                     onChange={(e) => handleCheckboxChange(index, e.target.checked)}
                   />
                   {task}
@@ -261,7 +257,7 @@ export default function Journal() {
           <div className="flex flex-wrap justify-between items-center mt-10 gap-4">
             <button
               onClick={handlePreviousDay}
-              className="px-8 py-5 text-lg bg-gray-200 text-gray-700 font-semibold rounded hover:bg-gray-300 disabled:opacity-50"
+              className="px-12 py-10 text-2xl bg-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-300 disabled:opacity-50"
               disabled={currentDay === 1}
             >
               ← Previous Day
@@ -269,7 +265,7 @@ export default function Journal() {
 
             <button
               onClick={markDayComplete}
-              className="px-8 py-5 text-lg bg-green-600 text-white font-bold rounded hover:bg-green-700"
+              className="px-12 py-10 text-2xl bg-green-600 text-white font-bold rounded-xl hover:bg-green-700"
               disabled={userProgress.journalEntries[currentDay]?.completed}
             >
               {userProgress.journalEntries[currentDay]?.completed ? 'Day Completed' : 'Mark Day as Complete'}
@@ -277,7 +273,7 @@ export default function Journal() {
 
             <button
               onClick={handleNextDay}
-              className="px-8 py-5 text-lg bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 disabled:opacity-50"
+              className="px-12 py-10 text-2xl bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 disabled:opacity-50"
               disabled={currentDay === journalDays.length}
             >
               Next Day →
