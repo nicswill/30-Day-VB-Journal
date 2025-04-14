@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { UserProgress } from '../types';
-import { journalDays, weekIntros, weekEndMessages, getWeekNumber, isLastDayOfWeek, getFinalMessage } from '../data/journalContent';
+import { journalDays, weekIntros, weekEndMessages, getWeekNumber, getFinalMessage } from '../data/journalContent';
 import coverImg from '../assets/cover.jpg';
 
 export default function Journal() {
