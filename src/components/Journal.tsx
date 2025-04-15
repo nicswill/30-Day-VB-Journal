@@ -101,16 +101,14 @@ export default function Journal() {
   };
 
   const handleNextDay = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-      setCurrentDay(day => day + 1);
-    }
-  };
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setCurrentDay(day => day + 1);
+};
 
   const handlePreviousDay = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-      setCurrentDay(day => day - 1);
-    }
-  };
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setCurrentDay(day => day - 1);
+};
 
   const currentDayData = currentDay <= journalDays.length ? journalDays[currentDay - 1] : null;
   const weekNumber = getWeekNumber(currentDay);
