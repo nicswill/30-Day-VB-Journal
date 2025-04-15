@@ -175,7 +175,7 @@ God has a vision for you.</p>
           <p className="mb-4">Don't rush the process. Go at your pace and invite God into every moment.</p>
           <button
             onClick={() => setShowIntro(false)}
-            className="mt-6 px-8 py-6 bg-indigo-700 text-white text-2xl font-bold rounded-xl shadow hover:bg-indigo-800"
+            className="mt-10 px-16 py-12 bg-indigo-700 text-white text-4xl font-bold rounded-2xl shadow-xl hover:bg-indigo-800"
           >
             Start Journal
           </button>
