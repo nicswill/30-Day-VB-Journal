@@ -197,11 +197,11 @@ export default function Journal() {
             </div>
           </div>
 
-          <div className="mb-12">
-            <h2 className="text-xl font-semibold mb-4">Think About This</h2>
+          <div className="mb-16">
+            <h2 className="text-xl font-semibold mb-6">Think About This</h2>
             {currentDayData.thinkAboutThis.map((question, index) => (
-              <div key={index} className="mb-12">
-                <label className="block text-lg font-medium text-gray-800 mb-2 w-full">{question}</label>
+              <div key={index} className="mb-16">
+                <label className="block text-lg font-medium text-gray-800 mb-6 w-full">{question}</label>
                 <textarea
                   className="block w-full border border-gray-300 rounded-md p-4 resize-none"
                   rows={4}
@@ -212,11 +212,11 @@ export default function Journal() {
             ))}
           </div>
 
-          <div className="mb-12">
-            <h2 className="text-xl font-semibold mb-4">Take Action</h2>
+          <div className="mb-16">
+            <h2 className="text-xl font-semibold mb-6">Take Action</h2>
             {currentDayData.takeAction.map((task, index) => (
-              <div key={index} className="mb-12">
-                <label className="block text-lg font-medium text-gray-800 mb-2 w-full">
+              <div key={index} className="mb-16">
+                <label className="block text-lg font-medium text-gray-800 mb-6 w-full">
                   <input
                     type="checkbox"
                     className="mr-2 align-middle"
@@ -226,7 +226,7 @@ export default function Journal() {
                   {task}
                 </label>
                 <textarea
-                  className="block w-full border border-gray-300 rounded-md p-4 resize-none mt-2"
+                  className="block w-full border border-gray-300 rounded-md p-4 resize-none mt-6"
                   rows={3}
                   value={currentDayEntries.takeActionResponses[index] || ''}
                   onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
@@ -255,6 +255,13 @@ export default function Journal() {
           )}
 
           <div className="flex flex-wrap justify-between items-center mt-10 gap-4">
+            <button
+              onClick={() => setShowIntro(true)}
+              className="px-6 py-4 text-lg bg-yellow-500 text-white font-semibold rounded-xl hover:bg-yellow-600"
+            >
+              Back to Introduction
+            </button>
+
             <button
               onClick={handlePreviousDay}
               className="px-12 py-10 text-2xl bg-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-300 disabled:opacity-50"
