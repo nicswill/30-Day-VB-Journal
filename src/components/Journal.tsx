@@ -161,7 +161,7 @@ export default function Journal() {
           <p className="mb-4">Don't rush the process. Go at your pace and invite God into every moment.</p>
           <button
             onClick={() => setShowIntro(false)}
-            className="mt-6 px-8 py-6 bg-indigo-700 text-white text-xl font-bold rounded-xl shadow hover:bg-indigo-800"
+            className="mt-6 px-8 py-6 bg-indigo-700 text-white text-2xl font-bold rounded-xl shadow hover:bg-indigo-800"
           >
             Start Journal
           </button>
@@ -184,12 +184,12 @@ export default function Journal() {
           )}
 
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-2">Scripture</h2>
-            <p className="text-lg text-gray-700 whitespace-pre-line">{currentDayData.scripture}</p>
+            <h2 className="text-2xl font-semibold mb-2">Scripture</h2>
+            <p className="text-xl text-gray-700 whitespace-pre-line">{currentDayData.scripture}</p>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-2">Let's Talk</h2>
+            <h2 className="text-2xl font-semibold mb-2">Let's Talk</h2>
             <div className="text-gray-800 space-y-3">
               {currentDayData.letsTalk.split('\n').map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
@@ -198,10 +198,10 @@ export default function Journal() {
           </div>
 
           <div className="mb-16">
-            <h2 className="text-xl font-semibold mb-6">Think About This</h2>
+            <h2 className="text-2xl font-semibold mb-6">Think About This</h2>
             {currentDayData.thinkAboutThis.map((question, index) => (
               <div key={index} className="mb-12">
-                <p className="block text-lg font-medium text-gray-800 mb-4">{question}</p>
+                <p className="block text-xl font-medium text-gray-800 mb-4">{question}</p>
                 <textarea
                   className="block w-full border border-gray-300 rounded-md p-4 resize-none"
                   rows={4}
@@ -213,10 +213,10 @@ export default function Journal() {
           </div>
 
           <div className="mb-16">
-            <h2 className="text-xl font-semibold mb-6">Take Action</h2>
+            <h2 className="text-2xl font-semibold mb-6">Take Action</h2>
             {currentDayData.takeAction.map((task, index) => (
               <div key={index} className="mb-12">
-                <p className="block text-lg font-medium text-gray-800 mb-4">
+                <p className="block text-xl font-medium text-gray-800 mb-4">
                   <input
                     type="checkbox"
                     className="mr-2 align-middle"
@@ -236,20 +236,20 @@ export default function Journal() {
           </div>
 
           <div className="mb-12">
-            <h2 className="text-xl font-semibold mb-2">Prayer</h2>
+            <h2 className="text-2xl font-semibold mb-2">Prayer</h2>
             <p className="italic text-gray-700">{currentDayData.prayer}</p>
           </div>
 
           {(currentDay % 7 === 0 && weekEndMessages[weekNumber]) && (
             <div className="mb-12">
-              <h2 className="text-xl font-semibold mb-2">End of Week Reflection</h2>
+              <h2 className="text-2xl font-semibold mb-2">End of Week Reflection</h2>
               <p className="text-gray-700 whitespace-pre-line">{weekEndMessages[weekNumber]}</p>
             </div>
           )}
 
           {currentDay === journalDays.length && (
             <div className="mb-12">
-              <h2 className="text-xl font-semibold mb-2">Final Encouragement</h2>
+              <h2 className="text-2xl font-semibold mb-2">Final Encouragement</h2>
               <p className="text-gray-700 whitespace-pre-line">{getFinalMessage()}</p>
             </div>
           )}
@@ -257,7 +257,7 @@ export default function Journal() {
           <div className="flex flex-wrap justify-between items-center mt-10 gap-4">
             <button
               onClick={() => setShowIntro(true)}
-              className="px-6 py-4 text-lg bg-yellow-500 text-white font-semibold rounded-xl hover:bg-yellow-600"
+              className="px-6 py-4 text-xl bg-yellow-500 text-white font-semibold rounded-xl hover:bg-yellow-600"
             >
               Back to Introduction
             </button>
