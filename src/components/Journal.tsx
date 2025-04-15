@@ -3,6 +3,8 @@ import type { UserProgress } from '../types';
 import { journalDays, weekIntros, weekEndMessages, getWeekNumber, getFinalMessage } from '../data/journalContent';
 import coverImg from '../assets/cover.jpg';
 
+
+
 export default function Journal() {
   const [currentDay, setCurrentDay] = useState(1);
   const [showIntro, setShowIntro] = useState(true);
