@@ -147,7 +147,7 @@ export default function Journal() {
       <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full px-4 mx-auto bg-white shadow rounded-lg p-8">
           <h1 className="text-3xl font-bold mb-4">Welcome to the 30-Day Vision Journal</h1>
-          $1
+          <img src={coverImg} alt="Journal Cover" className="w-full mb-8 rounded-lg shadow" />
           <div className="mb-10 p-6 bg-indigo-50 border-l-4 border-indigo-400 rounded text-xl text-gray-800 whitespace-pre-line shadow-md">
             <p className="mb-4">Dear Vision Builder,
 You are not here by accident. You may not have all the answers right now, and maybe you’re struggling to figure out what your life is supposed to look like. I get it—life can be confusing. But hear me when I say this:
