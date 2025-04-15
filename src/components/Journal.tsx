@@ -201,9 +201,9 @@ export default function Journal() {
             <h2 className="text-xl font-semibold mb-4">Think About This</h2>
             {currentDayData.thinkAboutThis.map((question, index) => (
               <div key={index} className="mb-12">
-                <label className="block text-sm font-medium text-gray-700 mb-4">{question}</label>
+                <label className="block text-lg font-medium text-gray-800 mb-2 w-full">{question}</label>
                 <textarea
-                  className="w-full border rounded-md p-4"
+                  className="block w-full border border-gray-300 rounded-md p-4 resize-none"
                   rows={4}
                   value={currentDayEntries.thinkAboutThisResponses[index] || ''}
                   onChange={(e) => handleResponseChange('thinkAboutThis', index, e.target.value)}
@@ -216,17 +216,17 @@ export default function Journal() {
             <h2 className="text-xl font-semibold mb-4">Take Action</h2>
             {currentDayData.takeAction.map((task, index) => (
               <div key={index} className="mb-12">
-                <label className="block text-sm font-medium text-gray-700 mb-4">
+                <label className="block text-lg font-medium text-gray-800 mb-2 w-full">
                   <input
                     type="checkbox"
-                    className="mr-2"
+                    className="mr-2 align-middle"
                     checked={currentDayEntries?.completedActions?.[index] ?? false}
                     onChange={(e) => handleCheckboxChange(index, e.target.checked)}
                   />
                   {task}
                 </label>
                 <textarea
-                  className="w-full border rounded-md p-4"
+                  className="block w-full border border-gray-300 rounded-md p-4 resize-none mt-2"
                   rows={3}
                   value={currentDayEntries.takeActionResponses[index] || ''}
                   onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
