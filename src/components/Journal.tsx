@@ -200,8 +200,8 @@ export default function Journal() {
           <div className="mb-16">
             <h2 className="text-xl font-semibold mb-6">Think About This</h2>
             {currentDayData.thinkAboutThis.map((question, index) => (
-              <div key={index} className="mb-16">
-                <label className="block text-lg font-medium text-gray-800 mb-6 w-full">{question}</label>
+              <div key={index} className="mb-12">
+                <p className="block text-lg font-medium text-gray-800 mb-4">{question}</p>
                 <textarea
                   className="block w-full border border-gray-300 rounded-md p-4 resize-none"
                   rows={4}
@@ -215,8 +215,8 @@ export default function Journal() {
           <div className="mb-16">
             <h2 className="text-xl font-semibold mb-6">Take Action</h2>
             {currentDayData.takeAction.map((task, index) => (
-              <div key={index} className="mb-16">
-                <label className="block text-lg font-medium text-gray-800 mb-6 w-full">
+              <div key={index} className="mb-12">
+                <p className="block text-lg font-medium text-gray-800 mb-4">
                   <input
                     type="checkbox"
                     className="mr-2 align-middle"
@@ -224,9 +224,9 @@ export default function Journal() {
                     onChange={(e) => handleCheckboxChange(index, e.target.checked)}
                   />
                   {task}
-                </label>
+                </p>
                 <textarea
-                  className="block w-full border border-gray-300 rounded-md p-4 resize-none mt-6"
+                  className="block w-full border border-gray-300 rounded-md p-4 resize-none mt-2"
                   rows={3}
                   value={currentDayEntries.takeActionResponses[index] || ''}
                   onChange={(e) => handleResponseChange('takeAction', index, e.target.value)}
