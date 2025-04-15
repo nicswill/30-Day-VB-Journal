@@ -101,13 +101,13 @@ export default function Journal() {
   };
 
   const handleNextDay = () => {
-    if (currentDay < journalDays.length) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
       setCurrentDay(day => day + 1);
     }
   };
 
   const handlePreviousDay = () => {
-    if (currentDay > 1) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
       setCurrentDay(day => day - 1);
     }
   };
