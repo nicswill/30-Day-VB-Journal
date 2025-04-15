@@ -147,7 +147,21 @@ export default function Journal() {
       <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full px-4 mx-auto bg-white shadow rounded-lg p-8">
           <h1 className="text-3xl font-bold mb-4">Welcome to the 30-Day Vision Journal</h1>
-          <img src={coverImg} alt="Journal Cover" className="w-full mb-8 rounded-lg shadow" />
+          $1
+          <div className="mb-10 p-6 bg-indigo-50 border-l-4 border-indigo-400 rounded text-xl text-gray-800 whitespace-pre-line shadow-md">
+            <p className="mb-4">Dear Vision Builder,
+You are not here by accident. You may not have all the answers right now, and maybe you’re struggling to figure out what your life is supposed to look like. I get it—life can be confusing. But hear me when I say this:
+
+God has a vision for you.</p>
+
+<p className="mb-4">You were made for something greater than just getting through each day. You have purpose, you have a calling, and there is a reason for everything you are experiencing right now. But here’s the truth: You won’t discover it by accident.</p>
+
+<p className="mb-4">That’s why this journal exists—to help you see, hear, and step into the vision God has for your life. Over the next 30 days, you’re going to dig deep into His Word, ask real questions, and take action. This isn’t just about reading—it’s about growing, changing, and stepping forward in faith.</p>
+
+<p className="mb-4">You might not have everything figured out by the end of this, and that’s okay. What matters is that you are moving in the right direction.</p>
+
+<p className="mb-4">Are you ready? Let’s begin.</p>
+          </div>
           <p className="mb-4">This journal is your guide to discovering and walking in God's vision for your life.</p>
           <p className="mb-4">Each day includes scripture, reflection prompts, action steps, and prayer. Take your time. Reflect. Be honest. Grow.</p>
           <h2 className="text-2xl font-semibold mt-8 mb-4">How to Use This Journal</h2>
